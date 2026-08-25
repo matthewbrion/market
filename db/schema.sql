@@ -18,7 +18,7 @@ CREATE TABLE products (
 
 CREATE TABLE orders (
     id serial PRIMARY KEY,
-    date date NOT NULL,
+    date date NOT NULL DEFAULT CURRENT_DATE,
     note text,
     user_id int NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
