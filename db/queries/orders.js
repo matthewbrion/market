@@ -45,3 +45,15 @@ export async function addProductToOrder(orderId, productId, quantity) {
     const { rows: [order] } = await db.query(sql, [orderId, productId, quantity]);
     return order;
 }
+
+export async function getOrdersByProductId(productId, userId) {
+    const sql = `
+    SELECT orders.*
+    FROM orders_products
+    JOIN orders ON orders_products.order_id = orders.id
+    WHERE orders_products.product_id = $1
+    AND orders.user_id = $2
+    `;
+    const { rows: orders } = await db.query(sql, [productId, userId]);
+    return orders;
+}

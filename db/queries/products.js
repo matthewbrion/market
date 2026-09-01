@@ -32,3 +32,14 @@ export async function getProductById(id) {
     const { rows: [product] } = await db.query(sql, [id]);
     return product;
 }
+
+export async function getProductByOrderId(orderId) {
+    const sql = `
+    SELECT products.*
+    FROM orders_products
+    JOIN products ON orders_products.product_id = products.id
+    WHERE orders_products.order_id = $1
+    `;
+    const { rows: products } = await db.query(sql, [orderId]);
+    return products;
+}

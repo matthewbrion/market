@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import db from "#db/client";
 import { createUser } from '#db/queries/users';
-import { createProduct } from './queries/products';
+import { createProduct } from '#db/queries/products';
 import { createOrder, addProductToOrder } from '#db/queries/orders';
 
 await db.connect();
