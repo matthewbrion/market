@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const product = await getOrdersByProductId(req.params.id);
+        const product = await getProductById(req.params.id);
         if(!product) return res.status(404).send('Product not found');
         res.send(product);
     } catch (e) {
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/orders', requireUser, async (req, res, next) => {
     try {
-        const product = await getOrdersByProductId(req.params.id);
+        const product = await getProductById(req.params.id);
         if(!product) return res.status(404).send('Product not found');
         const orders = await getOrdersByProductId(product.id, req.user.id);
         res.send(orders);

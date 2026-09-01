@@ -33,7 +33,7 @@ export async function getProductById(id) {
     return product;
 }
 
-export async function getProductByOrderId(orderId) {
+export async function getProductsByOrderId(orderId) {
     const sql = `
     SELECT products.*
     FROM orders_products

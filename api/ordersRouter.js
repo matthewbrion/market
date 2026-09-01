@@ -4,9 +4,8 @@ import {
     getOrdersByUserId,
     getOrderById,
     addProductToOrder,
-    getProductsByOrderId,
 } from '#db/queries/orders';
-import { getProductById } from '#db/queries/products';
+import { getProductById, getProductsByOrderId } from '#db/queries/products';
 import requireUser from '#middleware/requireUser';
 import requireBody from '#middleware/requireBody';
 
@@ -35,7 +34,7 @@ router.get('/', requireUser, async (req, res, next) => {
 router.get('/:id', requireUser, async (req, res, next) => {
     try {
         const order = await getOrderById(req.params.id);
-        if (!order) return res.status(400).send('Order not found');
+        if (!order) return res.status(404).send('Order not found');
         if (order.user_id !== req.user.id) return res.status(403).send('Forbidden');
         res.send(order);
     } catch (e) {
