@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { faker } from '@faker-js/faker';
 import db from "#db/client";
 import { createUser } from '#db/queries/users';
 import { createProduct } from '#db/queries/products';
@@ -23,13 +24,10 @@ async function seed() {
   }
 
   const products = [];
-  const productData = [
-    ['Widget', 'A useful widget', 9.99],
-    ['Gadget', 'A useful gadget', 19.99],
-    ['Gizmo', 'A useful gizmo', 29.99],
-    ['Doohickey', 'An essential doohickey', 4.99],
-  ];
-  for (const [title, description, price] of productData) {
+  for (let i = 0; i < 10; i++) {
+    const title = faker.commerce.productName();
+    const description = faker.commerce.productDescription();
+    const price = faker.commerce.price();
     const product = await createProduct(title, description, price);
     products.push(product);
   }
@@ -37,7 +35,10 @@ async function seed() {
   const order1 = await createOrder(users[0].id);
   await addProductToOrder(order1.id, products[0].id, 2);
   await addProductToOrder(order1.id, products[1].id, 1);
+  await addProductToOrder(order1.id, products[2].id, 4);
+  await addProductToOrder(order1.id, products[3].id, 1);
+  await addProductToOrder(order1.id, products[4].id, 2);
 
   const order2 = await createOrder(users[1].id, 'Gift wrap please');
-  await addProductToOrder(order2.id, products[2].id, 3);
+  await addProductToOrder(order2.id, products[5].id, 3);
 }
