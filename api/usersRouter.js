@@ -24,10 +24,10 @@ router.post('/login', async (req, res, next) => {
     try {
         const { username, password } = req.body;
         if (!username || !password) {
-            return res.send(400).send('Username and password are required');
+            return res.status(400).send('Username and password are required');
         }
         const user = await getUserByUsername(username);
-        if (!user) return res.send(401).send('Invalid credentials');
+        if (!user) return res.status(401).send('Invalid credentials');
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) return res.status(401).send('Invalid credentials');
         const token = createToken({ id: user.id });
