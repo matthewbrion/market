@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import request from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 export default function Product() {
     const { id } = useParams();
     const { token } = useAuth();
+    const { addItem } = useCart();
 
     const [product, setProduct] = useState(null);
     const [error, setError] = useState(null);
@@ -16,16 +18,16 @@ export default function Product() {
 
     useEffect(() => {
         request(`/products/${id}`)
-        .then(setProduct)
-        .catch((e) => setError(e.message))
-        .finally(() => setLoading(false));
+            .then(setProduct)
+            .catch((e) => setError(e.message))
+            .finally(() => setLoading(false));
     }, [id]);
 
     useEffect(() => {
         if (!token) return;
-        request(`/products/${id/orders}`, { token })
-        .then(setOrders)
-        .catch((e) => setOrdersError(e.message));
+        request(`/products/${id / orders}`, { token })
+            .then(setOrders)
+            .catch((e) => setOrdersError(e.message));
     }, [id, token]);
 
     if (loading) return <p>Loading...</p>;
@@ -37,8 +39,9 @@ export default function Product() {
             <p>{product.description}</p>
             <p>${Number(product.price).toFixed(2)}</p>
 
-            {/* TODO add to cart */}
-
+            <button onClick={() => addItem({ productId: product.id, title: product.title, price: product.price })}>
+                Add to Cart
+            </button>
             {token && (
                 <div>
                     <h2>${product.title} is on the these orders</h2>
