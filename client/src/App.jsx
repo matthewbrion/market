@@ -7,6 +7,7 @@ import Products from './pages/Products';
 import Product from './pages/Product';
 import Orders from './pages/Orders';
 import Order from './pages/Order';
+import Checkout from './pages/Checkout';
 
 export default function App() {
   const { token, username, logout } = useAuth();
@@ -38,6 +39,7 @@ export default function App() {
           <Route path='/products/:id' element={<Product />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/orders/:id' element={<Order />} />
+          <Route path='/checkout' element={<Checkout />} />
         </Routes>
       </main>
     </BrowserRouter>
