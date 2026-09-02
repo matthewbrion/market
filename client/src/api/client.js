@@ -14,4 +14,13 @@ export default async function request(path, {
         headers,
         body: body ? JSON.stringify(body) : undefined,
     });
+
+    if (!res.ok) {
+        const message = await res.text();
+        throw new Error(message || `Request failed with ${res.status}`);
+    }
+
+    // Auth routes return token string; everything else returns JSON
+    const type = res.headers.get('Content-Type') ?? '';
+    return type.includes('application/json') ? res.json() : res.text();
 }
