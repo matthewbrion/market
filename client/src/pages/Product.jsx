@@ -1,3 +1,58 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import request from '../api/client';
+import { useAuth } from '../context/AuthContext';
+
 export default function Product() {
-    return <h1>Product</h1>;
+    const { id } = useParams();
+    const { token } = useAuth();
+
+    const [product, setProduct] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const [orders, setOrders] = useState([]);
+    const [ordersError, setOrdersError] = useState(null);
+
+    useEffect(() => {
+        request(`/products/${id}`)
+        .then(setProduct)
+        .catch((e) => setError(e.message))
+        .finally(() => setLoading(false));
+    }, [id]);
+
+    useEffect(() => {
+        if (!token) return;
+        request(`/products/${id/orders}`, { token })
+        .then(setOrders)
+        .catch((e) => setOrdersError(e.message));
+    }, [id, token]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p role='alert'>{error}</p>
+
+    return (
+        <div>
+            <h1>{product.title}</h1>
+            <p>{product.description}</p>
+            <p>${Number(product.price).toFixed(2)}</p>
+
+            {/* TODO add to cart */}
+
+            {token && (
+                <div>
+                    <h2>${product.title} is on the these orders</h2>
+                    {ordersError && <p role='alert'>{ordersError}</p>}
+                    {!ordersError && orders.length === 0 && <p>None yet.</p>}
+                    <ul>
+                        {orders.map((order) => (
+                            <li key={order.id}>
+                                Order #{order.id} - {order.date}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
 }
