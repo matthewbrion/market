@@ -1,7 +1,7 @@
 const BASE = '/api';
 
 export default async function request(path, {
-    method: 'GET',
+    method = 'GET',
     body,
     token
 } = {}) {

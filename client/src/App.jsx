@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
-import Register from '.pages/Register';
-import Login from '.pages/Login';
-import Products from '.pages/Products';
-import Product from '.pages/Product';
-import Orders from '.pages/Orders';
-import Order from '.pages/Order';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Products from './pages/Products';
+import Product from './pages/Product';
+import Orders from './pages/Orders';
+import Order from './pages/Order';
 
 export default function App() {
   const { token, username, logout } = useAuth();
