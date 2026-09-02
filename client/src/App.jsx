@@ -8,6 +8,7 @@ import Product from './pages/Product';
 import Orders from './pages/Orders';
 import Order from './pages/Order';
 import Checkout from './pages/Checkout';
+import Cart from './pages/Cart';
 
 export default function App() {
   const { token, username, logout } = useAuth();
@@ -19,6 +20,7 @@ export default function App() {
         {token ? (
           <>
             <Link to='/orders'>My Orders</Link>
+            <Link to='/cart'>Cart</Link>
             <span>{username}</span>
             <button onClick={logout}>Log out</button>
           </>
@@ -40,6 +42,7 @@ export default function App() {
           <Route path='/orders' element={<Orders />} />
           <Route path='/orders/:id' element={<Order />} />
           <Route path='/checkout' element={<Checkout />} />
+          <Route path='/cart' element={<Cart />} />
         </Routes>
       </main>
     </BrowserRouter>

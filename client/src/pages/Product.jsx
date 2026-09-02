@@ -25,7 +25,7 @@ export default function Product() {
 
     useEffect(() => {
         if (!token) return;
-        request(`/products/${id / orders}`, { token })
+        request(`/products/${id}/orders`, { token })
             .then(setOrders)
             .catch((e) => setOrdersError(e.message));
     }, [id, token]);
@@ -44,9 +44,9 @@ export default function Product() {
             </button>
             {token && (
                 <div>
-                    <h2>${product.title} is on the these orders</h2>
+                    <h2>{product.title} is on the the following orders</h2>
                     {ordersError && <p role='alert'>{ordersError}</p>}
-                    {!ordersError && orders.length === 0 && <p>None yet.</p>}
+                    {!ordersError && orders.length === 0 && <p>None yet. Please click 'Add to cart' to add this product to an order.</p>}
                     <ul>
                         {orders.map((order) => (
                             <li key={order.id}>

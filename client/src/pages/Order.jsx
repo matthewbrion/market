@@ -35,11 +35,13 @@ export default function Order() {
             {order.note && <p>Note: {order.note}</p>}
             <h2>Products</h2>
             <ul>
-                {products.map((p) => {
-                    <li key={p.product_id}>
-                        Product #{p.product_id} - qty {p.quantity}
+                {products.map((p) => (
+                    
+                    <li key={p.id}>
+                        {p.title} - ${Number(p.price).toFixed(2)}
                     </li>
-                })}
+                    )
+                )}
             </ul>
         </div>
     );
